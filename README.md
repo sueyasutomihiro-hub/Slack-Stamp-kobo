@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33298879/README.md)
 # スタンプ工房（Slack-Stamp-kobo）
 
 Slackのスタンプ（カスタム絵文字）を気軽に作れるページです。いまは文字のスタンプだけ作れます。
