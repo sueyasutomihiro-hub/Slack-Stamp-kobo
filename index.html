@@ -134,6 +134,11 @@ h3.sub .n { font-size: 12px; font-weight: 700; color: var(--ok); font-variant-nu
 /* workbench */
 .bench { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start; }
 @media (max-width: 760px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+/* with a single stamp the work list is just one row above the editor, so the editor gets the full width */
+.bench.single { grid-template-columns: minmax(0, 1fr); }
+.bench.single .sheet { grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.name-field { container-type: inline-size; }
+@container (max-width: 480px) { .search-tip { grid-template-columns: minmax(0, 1fr); } }
 .sheet { display: grid; gap: 10px; }
 @media (max-width: 760px) { .sheet { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
 .sticker {
@@ -285,7 +290,8 @@ details.more > summary:focus-visible { outline: 2px solid var(--accent); outline
     border-bottom: 1px solid var(--line);
   }
   .peek img { width: 56px; height: 56px; flex: none; border-radius: 8px; background: var(--check-b); }
-  .peek-text { display: grid; min-width: 0; line-height: 1.45; }
+  .peek-text { display: grid; min-width: 0; line-height: 1.45; flex: 1 1 auto; }
+  .peek-save { flex: none; padding: 8px 16px; font-size: 14px; }
   .peek-text b { font-size: 13px; }
   .peek-text span { font-size: 12px; color: var(--muted); }
 }
@@ -468,14 +474,15 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
       <div class="panel work">
         <div class="controls">
           <!-- small screens: keeps the stamp in view while typing, since the big preview sits below the form -->
-          <div class="peek" aria-hidden="true">
-            <img class="m-real" alt="">
+          <div class="peek">
+            <img class="m-real" alt="" aria-hidden="true">
             <div class="peek-text"><b>いまのスタンプ</b><span id="peekVerdict"></span></div>
+            <button class="btn peek-save" id="peekSave" type="button">保存</button>
           </div>
           <div class="field">
             <label for="text">文字</label>
             <textarea id="text" rows="2" maxlength="24"></textarea>
-            <span class="hint">伝えたい言葉は短いほど、小さく表示されても読めます。「です」「しました」は自動で小さく入ります。長い言葉を流れる文字にしたいときは、下の「細かく調整する」を開いて「流れる文字」にチェックを入れてください。</span>
+            <span class="hint">改行の前の言葉が大きく表示されます（例：「嬉」と「しいです」の間で改行）。伝えたい言葉は短いほど、小さく表示されても読めます。「です」「しました」は自動で小さく入ります。長い言葉を流れる文字にしたいときは、下の「細かく調整する」を開いて「流れる文字」にチェックを入れてください。</span>
           </div>
 
           <div class="field">
@@ -483,7 +490,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
             <div class="swatches" id="colors"></div>
           </div>
 
-          <div class="field">
+          <div class="field name-field">
             <label for="name">絵文字の名前 <span class="must">Slackで探すときに使います</span></label>
             <div class="name-row"><span class="colon">:</span><input type="text" id="name" autocomplete="off" spellcheck="false"><span class="colon">:</span></div>
             <div class="name-note"><span id="nameNote"></span><button class="linkbtn" id="regenName" type="button" hidden>文字から付け直す</button></div>
@@ -1392,7 +1399,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
       const t = document.createElement("b");
       t.textContent = flat(st.text) || "（空）";
       const n = document.createElement("small");
-      n.textContent = st.example ? "見本：① で選ぶと入れ替わります" : st.name ? ":" + st.name + ":" : "名前が未入力";
+      n.textContent = st.example ? "見本（選ぶと入れ替わります）" : st.name ? ":" + st.name + ":" : "名前が未入力";
       span.append(t, n);
       b.append(img, span);
       b.addEventListener("click", () => { cur = i; loadForm(); renderAll(); });
@@ -1405,6 +1412,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     add.addEventListener("click", () => goTo("pick"));
     sheet.append(add);
     // Say exactly what "save all" saves; with a single stamp it would repeat the main button.
+    document.querySelector(".bench").classList.toggle("single", stamps.length < 2);
     const all = $("saveAll");
     all.hidden = stamps.length < 2;
     all.textContent = "作業中の" + stamps.length + "個をまとめて保存";
@@ -1685,6 +1693,11 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     $("doneFile").textContent = file;
     $("doneCopy").onclick = () => copyName(st.name, $("doneCopy"), true);
     $("doneCard").hidden = false;
+    reveal($("doneCard"));
+  }
+  // On phones the save result sits far below the sticky save button, so bring it into view.
+  function reveal(el) {
+    if (window.matchMedia("(max-width: 900px)").matches) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
   }
 
   async function saveOne(st, downloads) {
@@ -1693,6 +1706,8 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     st.example = false;
     return st.name + "." + f.ext;
   }
+
+  $("peekSave").addEventListener("click", () => $("save").click());
 
   $("save").addEventListener("click", async () => {
     const st = stamps[cur];
