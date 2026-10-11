@@ -584,8 +584,8 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
             <button class="btn" id="save" type="button">この画像を保存</button>
             <button class="btn ghost" id="saveAll" type="button">全部保存</button>
           </div>
-          <p class="save-note">Slack登録用の画像（128×128）で保存します。表示の大きさは、Slackが場面に合わせて自動で変えます。</p>
-          <div class="spec"><span id="fmt">画像</span><span id="size">—</span></div>
+          <p class="save-note">Slack登録用の画像（128×128）で保存します。</p>
+          <div class="spec"><span id="size">—</span></div>
           <div class="status" id="status" role="status"></div>
           <div class="done" id="doneCard" hidden>
             <b>保存できました。次はパソコンのSlackで登録します</b>
@@ -1463,8 +1463,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     document.querySelectorAll(".m-inline, .m-react, .m-real").forEach((im) => { im.src = url; });
     $("fallbackImg").src = url;
   }
-  function showSize(bytes, fmt) {
-    $("fmt").textContent = fmt;
+  function showSize(bytes) {
     const sz = $("size");
     const ok = bytes <= LIMIT;
     const kb = Math.max(1, Math.round(bytes / 1024));
@@ -1513,7 +1512,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     };
     if (st.motion !== "scroll") {
       const url = still();
-      showSize(Math.round((url.length - "data:image/png;base64,".length) * 3 / 4), "止まったスタンプ");
+      showSize(Math.round((url.length - "data:image/png;base64,".length) * 3 / 4));
       return;
     }
     const apply = (g) => {
@@ -1522,12 +1521,11 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
       $("bigGif").hidden = false;
       big.style.visibility = "hidden";
       showImages(g.url);
-      showSize(g.size, "動くスタンプ");
+      showSize(g.size);
     };
     const ready = gifReady(st);
     if (ready) { apply(ready); return; }
     still();
-    $("fmt").textContent = "動くスタンプ";
     $("size").textContent = "作成中…";
     $("size").className = "";
     if (!fontsLoaded) return;
