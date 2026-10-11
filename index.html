@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Slackでのリアクション用のスタンプを作れるページです（いまは文字だけ）。">
+<meta name="description" content="Slackのスタンプを気軽に作れるページです。">
 <meta property="og:title" content="スタンプ工房">
-<meta property="og:description" content="Slackでのリアクション用のスタンプを作れるページです（いまは文字だけ）。">
+<meta property="og:description" content="Slackのスタンプを気軽に作れるページです。">
 <meta property="og:type" content="website">
 <style>
 :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
@@ -123,6 +123,12 @@ h3.sub .n { font-size: 12px; font-weight: 700; color: var(--ok); font-variant-nu
 .own-main label { font-size: 16px; font-weight: 700; }
 .own-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .own-row input { flex: 1 1 200px; min-width: 0; font-size: 17px; font-weight: 700; }
+.own-row .btn { flex: 1 0 auto; white-space: nowrap; }
+/* phones: preview on top, then the label, field and button at full width */
+@media (max-width: 560px) {
+  .own { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .own img { width: 56px; height: 56px; }
+}
 
 /* workbench */
 .bench { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start; }
@@ -180,7 +186,8 @@ textarea { resize: vertical; min-height: 64px; font-size: 18px; font-weight: 700
 .sw-custom { position: relative; overflow: hidden; background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red); }
 .sw-custom input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .toggles { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-.toggles label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.toggles label, label.check { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+label.check { justify-self: start; font-weight: 700; }
 
 /* "search by name" callout */
 .must { margin-left: 6px; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); vertical-align: 1px; }
@@ -490,8 +497,13 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
           </div>
 
           <details class="more" id="moreOpts">
-            <summary>細かく調整する<small>フォント・流れる文字・ふち取りなど。そのままでもきれいに仕上がります。</small></summary>
+            <summary>細かく調整する<small>流れる文字・フォント・ふち取りなど。長い言葉を流れる文字にしたいときは、ここを開きます。</small></summary>
             <div class="more-body">
+              <div class="field">
+                <span class="lbl">流れる文字</span>
+                <label class="check"><input type="checkbox" id="motion"> 流れる文字にする（動くスタンプ）</label>
+                <span class="hint">チェックを入れると、文字が右から左へ流れる動くスタンプになります。「ありがとうございます」のような長い言葉でも、小さく表示されたときに読めます。アニメーションを止めている人には、止まって見えます。</span>
+              </div>
               <div class="field">
                 <span class="lbl">フォント</span>
                 <div class="chips" id="fonts"></div>
@@ -499,7 +511,6 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
               <div class="field">
                 <span class="lbl">仕上げ</span>
                 <div class="toggles">
-                  <label><input type="checkbox" id="motion"> 流れる文字（動くスタンプ）</label>
                   <label><input type="checkbox" id="emph"> 1行目を大きく</label>
                   <label><input type="checkbox" id="stretch"> 枠いっぱいに引き伸ばす</label>
                   <label><input type="checkbox" id="outline"> 白いふち取り</label>
