@@ -123,11 +123,12 @@ h3.sub .n { font-size: 12px; font-weight: 700; color: var(--ok); font-variant-nu
 .own-main label { font-size: 16px; font-weight: 700; }
 .own-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .own-row input { flex: 1 1 200px; min-width: 0; font-size: 17px; font-weight: 700; }
-.own-row .btn { flex: 1 0 auto; white-space: nowrap; }
+.own-row .btn { flex: 0 0 auto; white-space: nowrap; }
 /* phones: preview on top, then the label, field and button at full width */
 @media (max-width: 560px) {
   .own { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .own img { width: 56px; height: 56px; }
+  .own-row .btn { flex: 1 1 100%; }
 }
 
 /* workbench */
@@ -1233,7 +1234,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     img.style.opacity = v ? "1" : ".45";
     const hint = $("ownHint");
     if (!v) {
-      hint.textContent = "長い言葉は、自動で「流れる文字」になります。";
+      hint.textContent = "長い言葉は、自動で「流れる文字」になります。文字が右から左へ流れるので、長い文字でも読めます。";
       return;
     }
     const moving = needsMotion(st);
