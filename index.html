@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="気持ちを丁寧語の文字スタンプにして、Slackのカスタム絵文字として使えるようにするページです。">
+<meta name="description" content="Slackでのリアクション用のスタンプを作れるページです（いまは文字だけ）。">
 <meta property="og:title" content="スタンプ工房">
-<meta property="og:description" content="気持ちを丁寧語の文字スタンプにして、Slackのカスタム絵文字として使えるようにするページです。">
+<meta property="og:description" content="Slackでのリアクション用のスタンプを作れるページです（いまは文字だけ）。">
 <meta property="og:type" content="website">
 <style>
 :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
@@ -396,7 +396,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
 <div class="wrap">
   <header>
     <h1>スタンプ工房</h1>
-    <p>気持ちを文字のスタンプにして、Slackで使えるようにするページです。下の ① から順に進めてください。</p>
+    <p>Slackでのリアクション用のスタンプを作れるページです（いまは文字だけ）。下の ① から順に進めてください。</p>
     <nav aria-label="作り方の流れ">
       <ol class="stepper">
         <li><a href="#pick"><span class="num">1</span><b>選ぶ</b><small>使えるスタンプを確かめて、見本か自分の言葉を選ぶ</small></a></li>
@@ -432,8 +432,8 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
         <div class="lib-filter" id="libFilter" role="group" aria-label="種類で絞り込む"></div>
         <div class="lib-grid" id="libGrid"></div>
         <p class="lib-note">
-          <span class="tag motion">流れる</span> は動くスタンプです（アニメーションを止めている人には、止まって見えます）。
-          見本は、Slackでよく使われる例と、学校向けの提案から選びました。参考：<a href="https://slack.com/intl/ja-jp/blog/productivity/some-of-the-ways-we-use-emoji-at-slack" target="_blank" rel="noopener">Slack公式ブログ</a>、
+          <span class="tag motion">流れる</span> とは、動くスタンプです（文字が右から左へ流れるので、長い言葉でも読めます）。流れる文字にしたいときは、② の「細かく調整する」を開いて「流れる文字」にチェックを入れてください。
+          見本は、Slackでよく使われる例や、Webサイトからピックアップしています。参考：<a href="https://slack.com/intl/ja-jp/blog/productivity/some-of-the-ways-we-use-emoji-at-slack" target="_blank" rel="noopener">Slack公式ブログ</a>、
           <a href="https://qiita.com/devmatsuko/items/b6807edb15a218320293" target="_blank" rel="noopener">社内の雰囲気を良くするSlackカスタム絵文字集（Qiita）</a>、
           <a href="https://dime.jp/genre/2040341/" target="_blank" rel="noopener">@DIME</a>、
           <a href="https://slack-emoji.webflow.io/" target="_blank" rel="noopener">Slackカスタム絵文字（無料配布）</a>
@@ -461,7 +461,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
           <div class="field">
             <label for="text">文字</label>
             <textarea id="text" rows="2" maxlength="24"></textarea>
-            <span class="hint">伝えたい言葉は短いほど、小さく表示されても読めます。「です」「しました」は自動で小さく入ります。</span>
+            <span class="hint">伝えたい言葉は短いほど、小さく表示されても読めます。「です」「しました」は自動で小さく入ります。長い言葉を流れる文字にしたいときは、下の「細かく調整する」を開いて「流れる文字」にチェックを入れてください。</span>
           </div>
 
           <div class="field">
@@ -1231,7 +1231,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
       queueGif(st, (g) => { if ($("ownText").value.trim() === v) img.src = g.url; });
     }
     const name = suggestName(v);
-    hint.textContent = (moving ? "長い言葉なので流れる文字にします（" + legiShort(st) + "）" : "読みやすさ：" + legiShort(st))
+    hint.textContent = (moving ? "長い言葉なので、文字が右から左へ流れて読めるようにした方がいいです（作ると自動で流れる文字になります）" : "読みやすさ：" + legiShort(st))
       + "　名前 " + (name ? ":" + name + ":" : "は次の画面で入れます");
   }
 
@@ -1258,7 +1258,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
     $("ownText").value = "";
     renderOwn();
     loadForm(); renderAll();
-    if (moving) setStatus("長い言葉なので「流れる文字」にしました。止めたいときは、仕上げの「流れる文字」を外してください。");
+    if (moving) setStatus("長い言葉なので「流れる文字」にしました。止めたいときは、「細かく調整する」の「流れる文字」のチェックを外してください。");
     goTo("make");
     if (!st.name) setTimeout(() => $("name").focus({ preventScroll: true }), 450);
   });
