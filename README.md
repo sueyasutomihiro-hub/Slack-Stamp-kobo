@@ -1,6 +1,6 @@
 # スタンプ工房（Slack-Stamp-kobo）
 
-Slackのスタンプ（カスタム絵文字）を気軽に作れるページです。いまは文字のスタンプだけ作れます。
+Slackのスタンプを気軽に作れるページです。いまは文字のスタンプだけ作れます。
 
 **▶ ページを開く：https://sueyasutomihiro-hub.github.io/Slack-Stamp-kobo/**
 
