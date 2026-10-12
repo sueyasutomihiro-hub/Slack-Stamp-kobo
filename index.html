@@ -404,6 +404,33 @@ h3.method { margin: 0 0 14px; font-size: 17px; padding-left: 10px; border-left: 
 /* C (iPhone) sits last; on an iPhone it moves to the top of ③ */
 .method-c { margin-top: 36px; }
 .method-c.first { margin: 0 0 36px; }
+.red { color: var(--bad); }
+/* iPhone share sheet picture: fixed light colors on purpose, like the real sheet; the red frame marks 「画像を保存」 */
+.ios-sheet {
+  width: 100%; max-width: 300px; display: grid; gap: 12px; padding: 12px 10px 12px; border-radius: 18px;
+  background: #F2F2F7; color: #000; border: 1px solid #DDDDE3; box-shadow: 0 6px 20px rgba(20, 30, 50, .12);
+  font-family: -apple-system, "Hiragino Sans", "Meiryo", sans-serif;
+}
+.ios-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; padding: 0 4px 10px; border-bottom: 1px solid #D8D8DE; }
+.ios-head img { width: 44px; height: 44px; border-radius: 10px; background: #FFFFFF; }
+.ios-head b { display: block; font-size: 14px; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ios-head small { display: block; font-size: 12px; color: #8A8A8E; }
+.ios-apps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center; padding-bottom: 12px; border-bottom: 1px solid #D8D8DE; }
+.ios-apps i { width: 40px; height: 40px; border-radius: 10px; background: #E2E2E7; }
+.ios-acts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(max-content, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: 4px; align-items: start; }
+.ios-act { display: grid; justify-items: center; gap: 4px; padding: 6px 2px; border-radius: 12px; font-size: 10.5px; line-height: 1.3; text-align: center; }
+.ios-act svg { width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: #E2E2E7; fill: none; stroke: #000; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ios-act.hit { outline: 3px solid #E0352B; outline-offset: -2px; font-weight: 700; }
+.ios-sheet .ios-act span { font-size: inherit; color: inherit; }
+.steps li > .ios-fig { grid-column: 1 / -1; margin-top: 2px; }
+.ios-sheet .ios-act.hit span { white-space: nowrap; }
+/* iPhone: shown once, just before the first share sheet */
+.ios-dlg { border: 0; border-radius: 16px; padding: 18px 16px; width: min(360px, calc(100vw - 32px)); background: var(--surface); color: var(--ink); }
+.ios-dlg[open] { display: grid; gap: 12px; justify-items: center; }
+.ios-dlg::backdrop { background: rgba(10, 15, 25, .5); }
+.ios-dlg > b { font-size: 16px; line-height: 1.5; text-align: center; text-wrap: balance; word-break: auto-phrase; }
+.ios-dlg > p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--muted); }
+.ios-dlg .btn-row { width: 100%; }
 .shot.wide { margin-top: 18px; }
 .shot.wide .shot-frame { max-width: 760px; }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: s; }
@@ -661,14 +688,37 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
       <div class="method-c" id="howIphone">
         <h3 class="sub method">C：iPhoneのSlackアプリから登録する</h3>
         <ol class="steps">
-          <li><div><b>絵文字ボタンを開く</b><span>メッセージ入力欄の端にある 😊 をタップします。</span></div></li>
+          <li><div><b>「画像を保存」で「写真」に入れる</b><span>② で「保存」を押すと出てくる画面で、<strong class="red">赤い枠の「画像を保存」</strong>をタップします（下の図）。Slackアプリでは「写真」の画像しか選べません。「"ファイル"に保存」では選べないので注意してください。</span></div>
+            <figure class="shot ios-fig" id="iosSheetFig">
+              <div class="ios-sheet" role="img" aria-label="iPhoneの共有画面。下の段の「画像を保存」が赤い枠で囲まれている">
+                <div class="ios-head"><img class="m-real" alt=""><div><b class="ios-name">ryokai-desu</b><small class="ios-type">PNG画像</small></div></div>
+                <div class="ios-apps"><i></i><i></i><i></i><i></i></div>
+                <div class="ios-acts">
+                  <div class="ios-act"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h1"/></svg><span>コピー</span></div>
+                  <div class="ios-act hit"><svg viewBox="0 0 24 24"><path d="M12 3v11M7.5 9.5 12 14l4.5-4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span>画像を保存</span></div>
+                  <div class="ios-act"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5c1.3-2.2 3.2-3.3 5.5-3.3s4.2 1.1 5.5 3.3"/></svg><span>連絡先に割り当てる</span></div>
+                  <div class="ios-act"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><span>表示を増やす</span></div>
+                </div>
+              </div>
+              <figcaption>「保存」のあとに出る画面。赤い枠の「画像を保存」をタップ</figcaption>
+            </figure>
+          </li>
+          <li><div><b>絵文字ボタンを開く</b><span>Slackアプリのメッセージ入力欄の端にある 😊 をタップします。</span></div></li>
           <li><div><b>名前を入れて「カスタム絵文字を追加する」をタップ</b><span>検索欄に ② と同じ名前（例：<code>ryokai-desu</code>）を貼り付けます。まだない名前なら「カスタム絵文字を追加する」が出ます。スタンプが出てきたら、同じものがもうあるので、そのまま使いましょう。</span></div></li>
-          <li><div><b>「写真」から画像を選ぶ</b><span>「写真」に入っている、保存したスタンプを選びます。Slackアプリでは「写真」の画像しか選べないので、② で保存するときは、出てきた画面で<strong>「画像を保存」</strong>を選んでください。</span></div></li>
-          <li><div><b>「追加」をタップ</b><span>右上の「追加」をタップすると完了です。すぐにSlackで使えます。</span></div></li>
+          <li><div><b>「写真」から選んで「追加」</b><span>「写真」のいちばん新しい画像（保存したスタンプ）を選び、右上の「追加」をタップすると完了です。すぐにSlackで使えます。</span></div></li>
         </ol>
       </div>
     </div>
   </section>
+
+  <dialog class="ios-dlg" id="iosDialog" aria-labelledby="iosDlgTitle">
+    <b id="iosDlgTitle">次の画面で、<span class="red">赤い枠の「画像を保存」</span>をタップしてください</b>
+    <p>Slackアプリでは「写真」の画像しか選べません。「"ファイル"に保存」を選ぶと、Slackから選べないので注意してください。</p>
+    <div class="btn-row">
+      <button class="btn" id="iosGo" type="button">保存の画面を開く</button>
+      <button class="btn ghost" id="iosCancel" type="button">やめる</button>
+    </div>
+  </dialog>
 
   <footer class="site-foot">
     <p class="updated">最終更新：<time id="updated" datetime="2026-10-12">2026年10月12日</time></p>
@@ -1492,6 +1542,10 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
   function showImages(url) {
     document.querySelectorAll(".m-inline, .m-react, .m-real").forEach((im) => { im.src = url; });
     $("fallbackImg").src = url;
+    // The iPhone share sheet picture shows the stamp being made, under its own file name.
+    const st = stamps[cur];
+    document.querySelectorAll(".ios-name").forEach((el) => { el.textContent = st.name || "namae"; });
+    document.querySelectorAll(".ios-type").forEach((el) => { el.textContent = st.motion === "scroll" ? "GIF画像" : "PNG画像"; });
   }
   function showSize(bytes) {
     const sz = $("size");
@@ -1729,6 +1783,45 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
   }
   const PHOTO_RETRY = "保存をやめました。もう一度押して、「画像を保存」を選んでください。";
 
+  // The first save on an iPhone first shows which button to tap, since the share sheet then covers the page.
+  // The sheet must open inside a tap, so the guide's own button opens it.
+  let guided = false;
+  function viaGuide(run) {
+    const dlg = $("iosDialog");
+    if (guided || typeof dlg.showModal !== "function") { run(); return; }
+    $("iosGo").onclick = () => { guided = true; dlg.close(); run(); };
+    $("iosCancel").onclick = () => dlg.close();
+    dlg.showModal();
+  }
+  async function sharePhotoOne() {
+    const st = stamps[cur];
+    try {
+      const file = fileNow(st);
+      await shareFiles([file]);
+      st.example = false;
+      const tooBig = st.motion === "scroll" && makeGif(st).size > LIMIT;
+      setStatus(tooBig ? "ファイルが大きすぎて、Slackに登録できないかもしれません。言葉を短くしてください。" : "");
+      showDone(st, file.name);
+      renderSheet();
+    } catch (e) {
+      if (e && e.name === "AbortError") setStatus(PHOTO_RETRY);
+      else { showFallback(); setStatus("保存の画面を開けませんでした。下の画像を長押しして、「写真に保存」を選んでください。"); }
+    }
+  }
+  async function sharePhotoAll() {
+    try {
+      const files = stamps.map((s) => fileNow(s));
+      await shareFiles(files);
+      stamps.forEach((s) => { s.example = false; });
+      setStatus(files.length + " 個のスタンプを保存しました。Slackには1つずつ登録します。");
+      showDone(stamps[cur], files[cur].name);
+      renderSheet();
+    } catch (e) {
+      if (e && e.name === "AbortError") setStatus(PHOTO_RETRY);
+      else { showFallback(); setStatus("まとめて保存できませんでした。スタンプを1つずつ選んで、下の画像を長押しして「写真に保存」を選んでください。"); }
+    }
+  }
+
   // After a save: the three things to do in Slack, with the name ready to paste.
   function showDone(st, file) {
     const card = $("doneCard");
@@ -1754,21 +1847,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
   $("save").addEventListener("click", async () => {
     const st = stamps[cur];
     if (!validName(st.name)) { checkName(); $("name").focus(); return; }
-    if (shareToPhotos) {
-      try {
-        const file = fileNow(st);
-        await shareFiles([file]);
-        st.example = false;
-        const tooBig = st.motion === "scroll" && makeGif(st).size > LIMIT;
-        setStatus(tooBig ? "ファイルが大きすぎて、Slackに登録できないかもしれません。言葉を短くしてください。" : "");
-        showDone(st, file.name);
-        renderSheet();
-      } catch (e) {
-        if (e && e.name === "AbortError") setStatus(PHOTO_RETRY);
-        else { showFallback(); setStatus("保存の画面を開けませんでした。下の画像を長押しして、「写真に保存」を選んでください。"); }
-      }
-      return;
-    }
+    if (shareToPhotos) { viaGuide(sharePhotoOne); return; }
     const downloads = await dlReady;
     if (!downloads) {
       showFallback();
@@ -1792,19 +1871,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
   $("saveAll").addEventListener("click", async () => {
     const bad = stamps.find((s) => !validName(s.name));
     if (bad) { cur = stamps.indexOf(bad); loadForm(); renderAll(); $("name").focus(); return; }
-    if (shareToPhotos) {
-      try {
-        const files = stamps.map((s) => fileNow(s));
-        await shareFiles(files);
-        stamps.forEach((s) => { s.example = false; });
-        setStatus(files.length + " 個のスタンプを保存しました。Slackには1つずつ登録します。");
-        const st = stamps[cur]; showDone(st, files[cur].name); renderSheet();
-      } catch (e) {
-        if (e && e.name === "AbortError") setStatus(PHOTO_RETRY);
-        else { showFallback(); setStatus("まとめて保存できませんでした。スタンプを1つずつ選んで、下の画像を長押しして「写真に保存」を選んでください。"); }
-      }
-      return;
-    }
+    if (shareToPhotos) { viaGuide(sharePhotoAll); return; }
     const downloads = await dlReady;
     if (!downloads) { showFallback(); setStatus("この画面では保存ボタンが使えません。スタンプを1つずつ選んで、下の画像から保存してください。"); return; }
     let saved = 0;
@@ -1834,8 +1901,10 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
   // Phones: say where registering happens. On an iPhone, its steps (C) come first and the save card points at them.
   if (device === "iphone") {
     $("mobileNote").innerHTML = shareToPhotos
-      ? "iPhoneでは、保存ボタンを押すと出てくる画面で<b>「画像を保存」</b>を選んでください。「写真」に入り、そのままSlackアプリで登録できます（③のC）。「\"ファイル\"に保存」を選ぶと、Slackアプリから選べません。"
-      : "iPhoneでは、下の画像を長押しして<b>「写真に保存」</b>を選んでください。Slackアプリでは「写真」の画像しか選べません（③のC）。";
+      ? "iPhoneでは、保存ボタンを押すと出てくる画面で<b class=\"red\">「画像を保存」</b>を選んでください。「写真」に入り、そのままSlackアプリで登録できます（③のC）。「\"ファイル\"に保存」を選ぶと、Slackアプリから選べません。"
+      : "iPhoneでは、下の画像を長押しして<b class=\"red\">「写真に保存」</b>を選んでください。Slackアプリでは「写真」の画像しか選べません（③のC）。";
+    // The guide shown before the first share sheet uses the same picture as ③-C.
+    $("iosDialog").insertBefore(document.querySelector("#iosSheetFig .ios-sheet").cloneNode(true), $("iosDialog").querySelector(".btn-row"));
     document.querySelector("#fallback span").textContent = "保存ボタンが使えない場合は、左の画像を長押しして「写真に保存」を選んでください。";
     if (!shareToPhotos) showFallback();
     $("doneTitle").textContent = "保存できました。次はiPhoneのSlackアプリで登録します";
