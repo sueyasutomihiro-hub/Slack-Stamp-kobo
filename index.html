@@ -378,6 +378,11 @@ details.more > summary:focus-visible { outline: 2px solid var(--accent); outline
 .mini.copy { background: var(--accent); color: var(--accent-ink); }
 .mini.quiet { color: var(--muted); border-color: var(--line); font-weight: 500; }
 .lib-note { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
+.site-foot { display: grid; gap: 4px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.site-foot p { margin: 0; }
+.site-foot .updated { color: var(--ink); font-weight: 700; }
+.site-foot a { color: var(--accent); text-underline-offset: 3px; }
+.site-foot .credits { font-size: 11.5px; }
 .lib-note a { color: var(--accent); }
 
 /* how-to */
@@ -416,7 +421,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
 <div class="wrap">
   <header>
     <h1>スタンプ工房</h1>
-    <p>Slackでのリアクション用のスタンプを作れるページです（いまは文字だけ）。下の ① から順に進めてください。</p>
+    <p>Slackのスタンプを気軽に作れるページです。いまは文字のスタンプだけ作れます。下の ① から順に進めてください。</p>
     <nav aria-label="作り方の流れ">
       <ol class="stepper">
         <li><a href="#pick"><span class="num">1</span><b>選ぶ</b><small>使えるスタンプを確かめて、見本か自分の言葉を選ぶ</small></a></li>
@@ -451,13 +456,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
         <p class="hint" style="margin:0">どれも丁寧語で、小さく表示されても読めます。押すと ② に進みます。</p>
         <div class="lib-filter" id="libFilter" role="group" aria-label="種類で絞り込む"></div>
         <div class="lib-grid" id="libGrid"></div>
-        <p class="lib-note">
-          <span class="tag motion">流れる</span> とは、動くスタンプです（文字が右から左へ流れるので、長い言葉でも読めます）。流れる文字にしたいときは、② の「細かく調整する」を開いて「流れる文字」にチェックを入れてください。
-          見本は、Slackでよく使われる例や、Webサイトからピックアップしています。参考：<a href="https://slack.com/intl/ja-jp/blog/productivity/some-of-the-ways-we-use-emoji-at-slack" target="_blank" rel="noopener">Slack公式ブログ</a>、
-          <a href="https://qiita.com/devmatsuko/items/b6807edb15a218320293" target="_blank" rel="noopener">社内の雰囲気を良くするSlackカスタム絵文字集（Qiita）</a>、
-          <a href="https://dime.jp/genre/2040341/" target="_blank" rel="noopener">@DIME</a>、
-          <a href="https://slack-emoji.webflow.io/" target="_blank" rel="noopener">Slackカスタム絵文字（無料配布）</a>
-        </p>
+        <p class="lib-note"><span class="tag motion">流れる</span> とは、動くスタンプです（文字が右から左へ流れるので、長い言葉でも読めます）。</p>
       </div>
     </div>
   </section>
@@ -482,7 +481,7 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
           <div class="field">
             <label for="text">文字</label>
             <textarea id="text" rows="2" maxlength="24"></textarea>
-            <span class="hint">改行の前の言葉が大きく表示されます（例：「嬉」と「しいです」の間で改行）。伝えたい言葉は短いほど、小さく表示されても読めます。「です」「しました」は自動で小さく入ります。長い言葉を流れる文字にしたいときは、下の「細かく調整する」を開いて「流れる文字」にチェックを入れてください。</span>
+            <span class="hint">改行の前の言葉が大きく表示されます（例：「嬉」と「しいです」の間で改行）。伝えたい言葉は短いほど、小さく表示されても読めます。</span>
           </div>
 
           <div class="field">
@@ -652,6 +651,13 @@ kbd, code { font-family: var(--font-mono); font-size: .9em; background: var(--bg
       </figure>
     </div>
   </section>
+
+  <footer class="site-foot">
+    <p class="updated">最終更新：<time id="updated" datetime="2026-10-11">2026年10月11日</time></p>
+    <p>困ったときは、このページを紹介した人にSlackで聞いてください。</p>
+    <p><a href="https://github.com/sueyasutomihiro-hub/Slack-Stamp-kobo" target="_blank" rel="noopener">GitHub（使い方・更新のしかた）</a></p>
+    <p class="credits">見本の言葉の参考：<a href="https://slack.com/intl/ja-jp/blog/productivity/some-of-the-ways-we-use-emoji-at-slack" target="_blank" rel="noopener">Slack公式ブログ</a>、<a href="https://qiita.com/devmatsuko/items/b6807edb15a218320293" target="_blank" rel="noopener">社内の雰囲気を良くするSlackカスタム絵文字集（Qiita）</a>、<a href="https://dime.jp/genre/2040341/" target="_blank" rel="noopener">@DIME</a>、<a href="https://slack-emoji.webflow.io/" target="_blank" rel="noopener">Slackカスタム絵文字（無料配布）</a>　フォント：Google Fonts</p>
+  </footer>
 </div>
 
 <script>
